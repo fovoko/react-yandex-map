@@ -1,6 +1,6 @@
 {
-  "short_name": "React YPath",
-  "name": "Simple React YPath",
+  "short_name": "react-yandex-map",
+  "name": "ReactJs + Yandex Maps + drag-n-drop",
   "icons": [
     {
       "src": "favicon.ico",

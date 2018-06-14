@@ -1,6 +1,6 @@
-# Project Title
+# react-yandex-map
 
-ReactJs + Yandex Maps + drag-n-drop
+It is just some simple app to test together ReactJs + Yandex Maps + drag-n-drop
 
 ## Getting Started
 
