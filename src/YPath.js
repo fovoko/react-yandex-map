@@ -1,14 +1,6 @@
-import React, {
-  Component
-} from 'react';
-// import update from 'immutability-helper';
-//import logo from './logo.svg';
+import React, { Component } from 'react';
 import './YPath.css';
 import YMap from './YMap';
-//import YLine from './YLine';
-//import MarksList from './MarksList';
-
-//let marksIdentity = 0;
 
 class YPath extends Component {
 
@@ -16,7 +8,6 @@ class YPath extends Component {
     this.map = map;
   }
 
-  
   render() {
     return (
       <div className="YPath" style={{ height: "100%", width: "100%" }} >

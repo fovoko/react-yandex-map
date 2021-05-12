@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
-//import update from 'immutability-helper';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import MarkItem from './MarkItem';
 import MarkMapItem from './MarkMapItem';
 
-const style = {
-	//width: "210px",
+const styleMarksList = {
 	float: "left",
 	zIndex: 100,
 	top: "10px",
 	left: "10px",
 	position: "absolute",
-	border: "2px dashed red",
+	border: "2px dashed green",
 	minHeight: "40px",
 	padding: "3px",
 	overflowY: "scroll",
 	maxHeight: '95%'
+};
+
+const styleTxtMark = { 
+	float: "left", 
+	width:"160px", 
+	height: "19px", 
+	marginBottom:"0.5rem" 
+};
+
+const styleBtnAdd = {
+	float:"left", 
+	width: 30,
+	height: 25, 
+	cursor: "pointer"
 };
 
 class MarksList extends Component {
@@ -56,11 +68,14 @@ class MarksList extends Component {
 		const marks = this.props.marks;
 
 		return (
-			<div className="MarksList" style={style}>
-				<input type="text" id="txtMark" key="txtMark" ref="txtMark" style={ {float: "left", width:"160px"} } onChange={this.txtChange.bind(this)} />
-				<button ref="btnAdd" id="btnAdd" disabled={!this.state.txt} onClick={this.btnClick.bind(this)} style={ {float:"left", width: 30, height: 25, cursor: "pointer"} } >+</button>
+			<div className="MarksList" style={ styleMarksList }>
+				<div style={ {} }>
+					<input type="text" id="txtMark" key="txtMark" ref="txtMark" style={ styleTxtMark } onChange={this.txtChange.bind(this)} />
+					<button ref="btnAdd" id="btnAdd" disabled={!this.state.txt} onClick={this.btnClick.bind(this)} style={ styleBtnAdd } >+</button>
+				</div>
 				<div style={ {clear: "both" } }>
-				{marks.map((mark, i) => (
+				{
+				marks.map((mark, i) => (
 					<MarkItem
 						key={mark.id}
 						index={i}
@@ -71,15 +86,14 @@ class MarksList extends Component {
 						mark={mark}
 						renderMark={this.props.renderMark}
 					/>
-				))}
-				{marks.map((mark, i) => (
+				)) }
+				{
+				marks.map((mark, i) => (
 					<MarkMapItem
 						key={mark.id}
 						index={i}
 						id={mark.id}
 						text={mark.val}
-						// moveMark={this.moveMark.bind(this)}
-						// deleteMark={this.deleteMark.bind(this)}
 						mark={mark}
 						renderMark={this.props.renderMark}
 					/>

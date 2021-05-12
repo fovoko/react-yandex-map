@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
-//import ItemTypes from './ItemTypes';
 
 const style = {
 	border: '1px dashed gray',
@@ -13,16 +12,15 @@ const style = {
 	position: "relative"
 };
 
-const styleCross ={
-	float: "right", 
+const styleCross = {
 	width: "30px", 
 	height: "30px",
-	lineHeight: "30px",
 	backgroundColor: "white",
 	cursor: "pointer",
 	position: "absolute",
 	top: "2px",
-	right: "2px"
+	right: "2px",
+	border: "2px dashed red"
 };
 
 const markSource = {
@@ -31,13 +29,12 @@ const markSource = {
 			id: props.id,
 			index: props.index,
 		}
-	},
+	}
 };
 
 const ItemTypes = {
 	MARK: 'mark'
 };
-
 
 const markTarget = {
 	hover(props, monitor, component) {
@@ -86,7 +83,6 @@ const markTarget = {
 	},
 }
 
-
 class MarkItem extends Component {
 	
 	static propTypes = {
@@ -108,12 +104,6 @@ class MarkItem extends Component {
 		return res;
 	}
 
-	// renderMapMark() {
-	// 	if (this.props.renderMark){
-	// 		this.props.renderMark(this.props.mark, this.props.index);
-	// 	}
-	// }
-
 	render() {
 		const {
 			text,
@@ -123,11 +113,9 @@ class MarkItem extends Component {
 		} = this.props
 		const opacity = isDragging ? 0 : 1
 
-		//this.renderMapMark();
-
 		return connectDragSource(
 			connectDropTarget(<div style={{ ...style, opacity }}>
-					{text} <a onClick={ (e)=>{ this.props.deleteMark(this.props.index); e.preventDefault(); } } style={ styleCross } >x</a>
+					{text} <button onClick={ (e)=>{ this.props.deleteMark(this.props.index); e.preventDefault(); } } style={ styleCross } >x</button>
 				</div>)
 		)
 	}

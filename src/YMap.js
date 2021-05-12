@@ -2,11 +2,8 @@ import React, {
   Component
 } from 'react';
 import update from 'immutability-helper';
-//import logo from './logo.svg';
-//import './YPath.css';
 import MarksList from './MarksList';
 import loadYandexMapScript from './helpers/loadYandexMapScript'
-import MarkMapItem from './MarkMapItem';
 
 let marksIdentity = 0;
 
@@ -20,20 +17,18 @@ class YMap extends Component {
     };
 
     this.placemarks = [];
-
   }
 
   componentDidMount() {
     let that = this;
 
     // Connect the initMap() function within this class to the global window context,
-    // so Google Maps can invoke it
+    // so Yandex Maps can invoke it
     window.initMap = this.initMap;
-    // Asynchronously load the Google Maps script, passing in the callback reference
+    // Asynchronously load the Yandex Maps script, passing in the callback reference
     loadYandexMapScript(this.props.apiSrc)
       .then(() => {
         window.ymaps.ready(() => {
-          //console.log('YMap ready this', this);
           var map = new window.ymaps.Map(that.refs.map.id, {
             center: [56.735951, 38.853323],
             zoom: 16,
@@ -60,11 +55,23 @@ class YMap extends Component {
 
   clickMap(e) {
     let coords = e.get('coords');
+    let name = "";
+    
+    window.ymaps.geocode( coords, { results: 1 } ).then( function(res){
+      var go = res.geoObjects.get(0);
+      name = go ? go.properties.get('name') : "";
+    } ).catch( function(err){
+      console.log('Couldn\'t detect address. ' + err);
 
-    if (this.addMark) {
-      this.addMark("", coords);
-    }
+      name = "";
+    }).then( ()=>
+    { 
+      this.addMark(name, coords);
+    } );
 
+    // if (this.addMark) {
+    //   this.addMark("", coords);
+    // }    
   }
 
   getCenter() {
@@ -73,63 +80,25 @@ class YMap extends Component {
     }
   }
 
-  // polylineChange(e) {
-
-  //   var coordinates = e.get('newCoordinates'),
-  //     newLength = coordinates.length,
-  //     oldCoordinates = e.get('oldCoordinates'),
-  //     oldLength = oldCoordinates.length;
-
-  //   if (newLength === oldLength) {
-
-  //     let arrChanged = [];
-
-  //     for (let i = 0; i < newLength; ++i) {
-  //       if ((coordinates[i][0] !== oldCoordinates[i][0]) && (coordinates[i][1] !== oldCoordinates[i][1])) {
-  //         arrChanged.push(i);
-  //       }
-  //     }
-
-  //     const marks = this.state.marks.slice();
-      
-  //     for (let k = 0; k<arrChanged.length; ++k){
-
-  //       let l = arrChanged[k];
-
-  //       let mark = marks[l];
-  //       marks[l] = { id: mark.id, val: mark.val, coords: coordinates[l] };
-    
-  //     }
-  //     // this.setState({
-  //     //   marks: marks
-  //     // });
-
-  //   }
-  // }
-
   renderPolygon() {
     if ( this.map ) {
       let map = this.map;
 
       map.geoObjects.removeAll();
 
-      var line = new global.ymaps.Polyline([] /*marks.map((item) => {
-        return item.coords
-      })*/, {}, {
-        strokeColor: "#00000088",
-        strokeWidth: 4,
+      var line = new global.ymaps.Polyline( [] , {}, 
+        {
+          strokeColor: "#00000088",
+          strokeWidth: 4,
 
-        editorMaxPoints: 0,//marks.length, //remove intermediate points - avoiding adding new vertices via map 
-        // editorMinPoints: marks.length,
-        editorMenuManager: function (items) {
-          items.length = 0;
-          return items;
-      }        
+          editorMaxPoints: 0,
+          
+          editorMenuManager: function (items) {
+            items.length = 0;
+            return items;
+        }        
       });
       this.polyline = line;
-
-      //this.polyline.editor.options.set( {maxPoints: 0} );
-      //line.geometry.events.add('change', this.polylineChange, this);
 
       line.editor.events.add('vertexdragend', this.edgeMove, this);
 
@@ -141,9 +110,7 @@ class YMap extends Component {
     }
   }
 
-
   edgeMove(a) {
-    //console.log(a.get('vertexModel'));
     let v = a.get('vertexModel');
 
     const marks = this.state.marks.slice();
@@ -155,9 +122,7 @@ class YMap extends Component {
     this.setState({
       marks: marks
     });
-
   }
-  
 
   renderMark(mark, index){
     if (this.polyline) {
@@ -234,27 +199,15 @@ class YMap extends Component {
       marks: marks
     });
   }
-  
- 
+   
   render() {
     return ( 
       <div style={{ height: "100%", width: "100%" }} >
         <div className="YMap" id={ this.props.id } ref="map" style={{ height: "100%", width: "100%" }} />
         <MarksList getMap={ this.getMap.bind(this) } marks={ this.state.marks } 
           moveMark={ this.moveMark.bind(this) } addMark={ this.addMark.bind(this) } delMark={ this.delMark.bind(this) } 
-          renderMark={ this.renderMark.bind(this) } /> 
-				{/* {this.state.marks.map((mark, i) => (
-					<MarkMapItem
-						key={mark.id}
-						index={i}
-						id={mark.id}
-						text={mark.val}
-						// moveMark={this.moveMark.bind(this)}
-						// deleteMark={this.deleteMark.bind(this)}
-						mark={mark}
-						renderMark={ this.renderMark.bind(this) } */}
-					/>
-				))}				 
+          renderMark={ this.renderMark.bind(this) } />
+				))
       </div >
     );
   }
