@@ -1,6 +1,20 @@
 {
-  "main.css": "static/css/main.a015aa81.css",
-  "main.css.map": "static/css/main.a015aa81.css.map",
-  "main.js": "static/js/main.713e2fd4.js",
-  "main.js.map": "static/js/main.713e2fd4.js.map"
+  "files": {
+    "main.css": "/react-yandex-map/static/css/main.c4df0218.chunk.css",
+    "main.js": "/react-yandex-map/static/js/main.311d5db0.chunk.js",
+    "main.js.map": "/react-yandex-map/static/js/main.311d5db0.chunk.js.map",
+    "runtime-main.js": "/react-yandex-map/static/js/runtime-main.848d7f1e.js",
+    "runtime-main.js.map": "/react-yandex-map/static/js/runtime-main.848d7f1e.js.map",
+    "static/js/2.f05d8fa6.chunk.js": "/react-yandex-map/static/js/2.f05d8fa6.chunk.js",
+    "static/js/2.f05d8fa6.chunk.js.map": "/react-yandex-map/static/js/2.f05d8fa6.chunk.js.map",
+    "index.html": "/react-yandex-map/index.html",
+    "static/css/main.c4df0218.chunk.css.map": "/react-yandex-map/static/css/main.c4df0218.chunk.css.map",
+    "static/js/2.f05d8fa6.chunk.js.LICENSE.txt": "/react-yandex-map/static/js/2.f05d8fa6.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.848d7f1e.js",
+    "static/js/2.f05d8fa6.chunk.js",
+    "static/css/main.c4df0218.chunk.css",
+    "static/js/main.311d5db0.chunk.js"
+  ]
 }
