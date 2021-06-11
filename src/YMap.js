@@ -4,6 +4,7 @@ import React, {
 import update from 'immutability-helper';
 import MarksList from './MarksList';
 import loadYandexMapScript from './helpers/loadYandexMapScript'
+import './YMap.css';
 
 let marksIdentity = 0;
 
@@ -37,18 +38,9 @@ class YMap extends Component {
           });
           this.map = map;
 
-          // window.addEventListener("resize", ()=>{
-          //   this.map.container.fitToViewport();
-          // });
-
           map.events.add('click', this.clickMap.bind(this));
 
-          if (typeof that.props.init === 'function') {
-            that.props.init(map);
-          }
-
           this.renderPolygon();
-
         });
       });
   }
@@ -68,10 +60,6 @@ class YMap extends Component {
     { 
       this.addMark(name, coords);
     } );
-
-    // if (this.addMark) {
-    //   this.addMark("", coords);
-    // }    
   }
 
   getCenter() {
@@ -104,9 +92,7 @@ class YMap extends Component {
 
       map.geoObjects.add(line);
 
-      
       line.editor.startEditing();
-
     }
   }
 
@@ -177,8 +163,6 @@ class YMap extends Component {
       coords: coords
     });
 
-    //this.polyline.editor.setOptions({maxPoints: marks.length});
-    
     this.setState({
       marks: marks
     });
@@ -207,7 +191,6 @@ class YMap extends Component {
         <MarksList getMap={ this.getMap.bind(this) } marks={ this.state.marks } 
           moveMark={ this.moveMark.bind(this) } addMark={ this.addMark.bind(this) } delMark={ this.delMark.bind(this) } 
           renderMark={ this.renderMark.bind(this) } />
-				))
       </div >
     );
   }
