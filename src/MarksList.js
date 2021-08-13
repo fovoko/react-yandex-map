@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 import MarkItem from './MarkItem';
 import MarkMapItem from './MarkMapItem';
 
@@ -102,6 +100,6 @@ class MarksList extends Component {
 			</div>
 		)
 	}
-};
+}
 
-export default  DragDropContext(HTML5Backend)(MarksList);
+export default MarksList;
